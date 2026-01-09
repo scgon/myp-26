@@ -63,6 +63,12 @@ function handleResultValidation() {
 
     if (roundWon) {
         statusDisplay.innerHTML = winningMessage();
+        if (currentPlayer === "X") {
+            statusDisplay.style.color = "#e74c3c";
+        } else {
+            statusDisplay.style.color = "#3498db";
+        }
+
         gameActive = false;
         return;
     }
@@ -70,6 +76,7 @@ function handleResultValidation() {
     let roundDraw = !gameState.includes("");
     if (roundDraw) {
         statusDisplay.innerHTML = drawMessage();
+        statusDisplay.style.color = "#6A0DAD";
         gameActive = false;
         return;
     }
@@ -87,6 +94,7 @@ function handleRestartGame() {
     currentPlayer = "X";
     gameState = ["", "", "", "", "", "", "", "", ""];
     statusDisplay.innerHTML = currentPlayerTurn();
+    statusDisplay.style.color = "#555"
 
     cells.forEach(cell => {
         cell.classList.remove('x');
