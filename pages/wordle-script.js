@@ -7,7 +7,6 @@ let currentRow = 0;
 let currentTile = 0;
 let gameOver = false;
 
-// Get the target word for today
 function getTargetWord() {
     return WORDS[Math.floor(Math.random() * WORDS.length)];
 }
@@ -15,7 +14,6 @@ function getTargetWord() {
 // Initialize the game
 function init() {
     targetWord = getTargetWord();
-    console.log('Target word:', targetWord); // For testing - remove in production
 
     // Add keyboard event listeners
     document.addEventListener('keydown', handleKeyPress);
@@ -34,6 +32,38 @@ function init() {
             }
         });
     });
+
+    // Add reset button event listener
+    const resetButton = document.getElementById('reset-button');
+    if (resetButton) {
+        resetButton.addEventListener('click', resetGame);
+    }
+}
+
+// Reset the game
+function resetGame() {
+    // Reset game state
+    currentRow = 0;
+    currentTile = 0;
+    gameOver = false;
+    targetWord = getTargetWord();
+
+    // Clear the board
+    const tiles = document.querySelectorAll('.tile');
+    tiles.forEach(tile => {
+        tile.textContent = '';
+        tile.className = 'tile';
+    });
+
+    // Reset keyboard
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => {
+        key.classList.remove('correct', 'present', 'absent');
+    });
+
+    // Hide any messages
+    const messageEl = document.getElementById('message');
+    messageEl.classList.remove('show');
 }
 
 // Handle keyboard input
@@ -90,9 +120,8 @@ function handleSubmit() {
         guess += tile.textContent;
     });
 
-    // Check if word is valid (in this simple version, any 5-letter combination is valid)
     if (guess.length !== 5) {
-        showMessage('Not enough letters');
+        // showMessage('Not enough letters');
         return;
     }
 
