@@ -6,9 +6,40 @@ let targetWord = '';
 let currentRow = 0;
 let currentTile = 0;
 let gameOver = false;
+let gameSession = 0;
+let pendingGameTimeouts = [];
+let messageTimeoutId = null;
+let ready = true;
 
 function getTargetWord() {
     return WORDS[Math.floor(Math.random() * WORDS.length)];
+}
+
+function scheduleGameTimeout(callback, delay, sessionId = gameSession) {
+    const timeoutId = setTimeout(() => {
+        pendingGameTimeouts = pendingGameTimeouts.filter(id => id !== timeoutId);
+
+        if (sessionId !== gameSession) {
+            return;
+        }
+
+        callback();
+    }, delay);
+
+    pendingGameTimeouts.push(timeoutId);
+    return timeoutId;
+}
+
+function clearPendingGameTimeouts() {
+    pendingGameTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    pendingGameTimeouts = [];
+}
+
+function clearMessageTimeout() {
+    if (messageTimeoutId !== null) {
+        clearTimeout(messageTimeoutId);
+        messageTimeoutId = null;
+    }
 }
 
 // Initialize the game
@@ -25,10 +56,13 @@ function init() {
             const letter = key.textContent;
             if (letter === 'ENTER') {
                 handleSubmit();
+                ready = false;
             } else if (letter === '⌫') {
                 handleBackspace();
+                ready = true;
             } else {
                 handleLetter(letter);
+                ready = true;
             }
         });
     });
@@ -42,6 +76,10 @@ function init() {
 
 // Reset the game
 function resetGame() {
+    gameSession++;
+    clearPendingGameTimeouts();
+    clearMessageTimeout();
+
     // Reset game state
     currentRow = 0;
     currentTile = 0;
@@ -63,7 +101,11 @@ function resetGame() {
 
     // Hide any messages
     const messageEl = document.getElementById('message');
+    messageEl.textContent = '';
     messageEl.classList.remove('show');
+
+    const enterButton = document.getElementById('enter-button');
+    enterButton.focus();
 }
 
 // Handle keyboard input
@@ -72,10 +114,13 @@ function handleKeyPress(e) {
 
     if (e.key === 'Enter') {
         handleSubmit();
+        ready = false;
     } else if (e.key === 'Backspace') {
         handleBackspace();
+        ready = true;
     } else if (e.key.match(/^[a-z]$/i)) {
         handleLetter(e.key.toUpperCase());
+        ready = true;
     }
 }
 
@@ -105,6 +150,10 @@ function handleBackspace() {
 
 // Handle submit
 function handleSubmit() {
+    if (!ready) {
+        return;
+    }
+
     if (gameOver || currentTile !== 5) {
         if (currentTile < 5) {
             showMessage('Not enough letters');
@@ -126,18 +175,19 @@ function handleSubmit() {
     }
 
     // Check the guess
-    checkGuess(guess, tiles);
+    const sessionId = gameSession;
+    checkGuess(guess, tiles, sessionId);
 
     if (guess === targetWord) {
         gameOver = true;
-        setTimeout(() => {
+        scheduleGameTimeout(() => {
             showMessage('Congratulations! 🎉', 3000);
-        }, 1500);
+        }, 1500, sessionId);
     } else if (currentRow === 5) {
         gameOver = true;
-        setTimeout(() => {
+        scheduleGameTimeout(() => {
             showMessage(`Game Over! The word was ${targetWord}`, 5000);
-        }, 1500);
+        }, 1500, sessionId);
     } else {
         currentRow++;
         currentTile = 0;
@@ -145,7 +195,7 @@ function handleSubmit() {
 }
 
 // Check the guess against the target word
-function checkGuess(guess, tiles) {
+function checkGuess(guess, tiles, sessionId = gameSession) {
     const targetLetters = targetWord.split('');
     const guessLetters = guess.split('');
     const statuses = Array(5).fill('absent');
@@ -171,10 +221,10 @@ function checkGuess(guess, tiles) {
 
     // Animate and color the tiles
     tiles.forEach((tile, i) => {
-        setTimeout(() => {
+        scheduleGameTimeout(() => {
             tile.classList.add(statuses[i]);
             updateKeyboard(guessLetters[i], statuses[i]);
-        }, i * 300);
+        }, i * 300, sessionId);
     });
 }
 
@@ -201,11 +251,18 @@ function updateKeyboard(letter, status) {
 // Show message to user
 function showMessage(text, duration = 2000) {
     const messageEl = document.getElementById('message');
+    clearMessageTimeout();
     messageEl.textContent = text;
     messageEl.classList.add('show');
 
-    setTimeout(() => {
+    const sessionId = gameSession;
+    messageTimeoutId = setTimeout(() => {
+        if (sessionId !== gameSession) {
+            return;
+        }
+
         messageEl.classList.remove('show');
+        messageTimeoutId = null;
     }, duration);
 }
 
