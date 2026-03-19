@@ -5,6 +5,8 @@ My aim was to learn JavaScript, and this is where my final product (a website co
 
 More notes about the project:
 
-This is my first JavaScript project, and chances are my code will be sloppy, probably with some flaws. If you can, please report an here on github.
+* This is my first JavaScript project, and chances are my code will be sloppy, probably with some flaws. If you can, please report any bugs [here](https://github.com/scgon/myp-26/issues) on github.
+* This website is now hosted on cloudflare pages, which means it's fast, easy-to-use, free, and doesn't require any server-side code. I also connected it to this github repository so the website updates whenever I push changes. It's hosted on the link below.
+* Currently, I've made several games, including a wordle game, a tic-tac-toe game, and a memory match game, but I want to make more graphical games in the future, maybe something like pong or snake.
 
-I eventually want to host this project on the web but as my project is still a work-in-progress and hosting is low on my to-do list, it's going to take me awhile.
+### Visit the website at https://myp-26.pages.dev!
