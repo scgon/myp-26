@@ -107,7 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function checkWin() {
         if (matchedPairs === 13) {
             clearInterval(timerInterval);
-            messageDisplay.textContent = 'Congratulations! You matched all pairs!';
+            messageDisplay.textContent = 'You Win!';
+            messageDisplay.classList.add('win', 'show');
         }
     }
 
@@ -121,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         movesDisplay.textContent = '0';
         timerDisplay.textContent = '00:00';
         messageDisplay.textContent = '';
+        messageDisplay.classList.remove('win', 'show');
         createBoard();
     }
 
