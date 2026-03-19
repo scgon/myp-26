@@ -181,12 +181,12 @@ function handleSubmit() {
     if (guess === targetWord) {
         gameOver = true;
         scheduleGameTimeout(() => {
-            showMessage('Congratulations! 🎉', 3000);
+            showMessage('You Win!', 3000, 'win');
         }, 1500, sessionId);
     } else if (currentRow === 5) {
         gameOver = true;
         scheduleGameTimeout(() => {
-            showMessage(`Game Over! The word was ${targetWord}`, 5000);
+            showMessage(`Game Over! The word was ${targetWord}`, 5000, 'lose');
         }, 1500, sessionId);
     } else {
         currentRow++;
@@ -249,11 +249,14 @@ function updateKeyboard(letter, status) {
 }
 
 // Show message to user
-function showMessage(text, duration = 2000) {
+function showMessage(text, duration = 2000, className = '') {
     const messageEl = document.getElementById('message');
     clearMessageTimeout();
     messageEl.textContent = text;
-    messageEl.classList.add('show');
+    messageEl.className = 'message show';
+    if (className) {
+        messageEl.classList.add(className);
+    }
 
     const sessionId = gameSession;
     messageTimeoutId = setTimeout(() => {

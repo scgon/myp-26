@@ -136,12 +136,28 @@ h1 {
 }
 
 .message {
-    margin-top: 20px;
-    font-size: 1.5rem;
-    font-weight: bold;
+    position: fixed;
+    top: 20px;
+    background-color: #333;
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 1.25rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 1000;
     text-align: center;
-    min-height: 2rem;
-    color: #333;
+}
+
+.message.show {
+    opacity: 1;
+}
+
+.message.win {
+    background-color: #538d4e;
+    color: #ffffff;
 }
 
 /* Sidenav alignment with other pages */

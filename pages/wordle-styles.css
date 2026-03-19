@@ -165,19 +165,31 @@ h1 {
 
 .message {
     position: fixed;
-    top: 80px;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 16px;
+    top: 20px;
+    background-color: #333;
+    color: #ffffff;
+    padding: 16px 32px;
     border-radius: 4px;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 1.25rem;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s;
+    z-index: 1000;
 }
 
 .message.show {
     opacity: 1;
+}
+
+.message.win {
+    background-color: #538d4e;
+    color: #ffffff;
+}
+
+.message.lose {
+    background-color: #e74c3c;
+    color: #ffffff;
 }
 
 .reset-button {
