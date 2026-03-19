@@ -80,18 +80,33 @@ body {
 
 /* --- restart button --- */
 .restart-btn {
+    margin-top: 24px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     background-color: #2ecc71;
     color: white;
     border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
 .restart-btn:hover {
     background-color: #27ae60;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+}
+
+.restart-btn:active {
+    transform: translateY(1px);
+}
+
+.restart-btn:focus-visible {
+    outline: 3px solid rgba(46, 204, 113, 0.35);
+    outline-offset: 2px;
 }
 
 #current-page {
