@@ -6,8 +6,10 @@
     <link rel="stylesheet" href="wordle-styles.css">
     <link rel="icon" href="/favicon.ico">
     <script src="wordle-script.js" defer></script>
+    <script src="nav-toggle.js" defer></script>
 </head>
 <body>
+<button class="nav-toggle" id="nav-toggle" aria-controls="sidenav" aria-expanded="false">☰</button>
 
 <header>
     <h1>WORDLE</h1>
@@ -106,7 +108,7 @@
 
 <div class="message" id="message"></div>
 
-<div class="sidenav">
+<div class="sidenav" id="sidenav">
     <a href="/index.html">Home</a>
     <a href="tic-tac-toe.html">Tic-Tac-Toe</a>
     <a href="wordle.html" id="current-page">Wordle</a>

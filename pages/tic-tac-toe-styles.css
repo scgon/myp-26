@@ -109,6 +109,22 @@ body {
     outline-offset: 2px;
 }
 
+.nav-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1300;
+    border: none;
+    border-radius: 6px;
+    padding: 2px 6px;
+    background: transparent;
+    color: #2196F3;
+    font-size: 2rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 #current-page {
     color: #246daf;
 }
@@ -122,6 +138,7 @@ body {
     background: #eee;
     overflow-x: hidden;
     padding: 8px 0;
+    transition: transform 0.2s ease;
 }
 
 .sidenav a {
@@ -135,3 +152,24 @@ body {
 .sidenav a:hover {
     color: #064579;
 }
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .sidenav {
+        top: 0;
+        left: 0;
+        height: 100%;
+        padding-top: 72px;
+        transform: translateX(-110%);
+        z-index: 1200;
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .sidenav.is-open {
+        transform: translateX(0);
+    }
+}
+
