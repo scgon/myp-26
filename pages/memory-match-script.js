@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageDisplay = document.getElementById('message');
     const restartButton = document.getElementById('restart-button');
 
-    const emojis = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐯', '🦁', '🐮', '🐷'];
+    const emojiPool = [
+        '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯',
+        '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐙', '🦀', '🐳', '🦄', '🐻‍❄️'
+    ];
     let flippedCards = [];
     let matchedPairs = 1;
     let moves = 0;
@@ -21,6 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return array;
     }
 
+    function getRandomEmojiSet(pairCount) {
+        return shuffle([...emojiPool]).slice(0, pairCount);
+    }
+
     function startTimer() {
         if (gameStarted) return;
         gameStarted = true;
@@ -34,10 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createBoard() {
         gameBoard.innerHTML = '';
-        
-        // Prepare 24 emoji cards and shuffle them
-        const emojiCards = shuffle([...emojis, ...emojis]);
-        
+
+        const selectedEmojis = getRandomEmojiSet(12);
+        const emojiCards = shuffle([...selectedEmojis, ...selectedEmojis]);
+
         // Insert '⭐' at index 12 (middle of 5x5 grid)
         const finalCards = [
             ...emojiCards.slice(0, 12),
