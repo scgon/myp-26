@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+    <link rel="stylesheet" href="snake-styles.css">
+    <link rel="icon" href="../favicon.ico">
+    <script src="snake-script.js" defer></script>
+    <script src="nav-toggle.js" defer></script>
+</head>
+<body>
+<button class="nav-toggle" id="nav-toggle" aria-controls="sidenav" aria-expanded="false">☰</button>
+
+<header>
+    <h1>Snake</h1>
+</header>
+
+<div class="game-container">
+    <div class="stats">
+        <div class="stat">Score: <span id="score">0</span></div>
+        <div class="stat">High Score: <span id="high-score">0</span></div>
+    </div>
+
+    <div class="settings-menu">
+        <h2 class="settings-title">Game Settings</h2>
+        <div class="settings-row">
+            <label for="speed-select" class="settings-label">Speed</label>
+            <select id="speed-select" class="settings-select">
+                <option value="slow">Slow</option>
+                <option value="normal" selected>Normal</option>
+                <option value="fast">Fast</option>
+            </select>
+        </div>
+        <div class="settings-row">
+            <label for="size-select" class="settings-label">Size</label>
+            <select id="size-select" class="settings-select">
+                <option value="small">Small (16×16)</option>
+                <option value="normal" selected>Normal (20×20)</option>
+                <option value="large">Large (25×25)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="canvas-wrapper">
+        <canvas id="snake-canvas" width="400" height="400"></canvas>
+    </div>
+
+    <div class="controls-dpad">
+        <button class="dpad-btn up" id="btn-up" aria-label="Up">▲</button>
+        <div class="dpad-row">
+            <button class="dpad-btn left" id="btn-left" aria-label="Left">◀</button>
+            <button class="dpad-btn down" id="btn-down" aria-label="Down">▼</button>
+            <button class="dpad-btn right" id="btn-right" aria-label="Right">▶</button>
+        </div>
+    </div>
+
+    <button id="restart-button" class="restart-button">Start Game</button>
+</div>
+
+<div class="message" id="message"></div>
+
+<div class="sidenav" id="sidenav">
+    <a href="../index.html">Home</a>
+    <a href="tic-tac-toe.html">Tic-Tac-Toe</a>
+    <a href="wordle.html">Wordle</a>
+    <a href="memory-match.html">Memory Match</a>
+    <a href="snake.html" id="current-page">Snake</a>
+</div>
+
+</body>
+</html>
