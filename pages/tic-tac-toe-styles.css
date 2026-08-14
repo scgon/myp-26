@@ -12,6 +12,66 @@ body {
     min-height: 100vh;
 }
 
+.settings-menu {
+    width: 100%;
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.settings-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #333;
+    text-align: center;
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.settings-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.settings-select {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+    background-color: #ffffff;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.settings-select:hover,
+.settings-select:focus {
+    border-color: #2ecc71;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+}
+
+.settings-row.hidden {
+    display: none;
+}
+
 .game-container {
     text-align: center;
     padding: 2rem;
@@ -129,16 +189,19 @@ body {
     color: #246daf;
 }
 
-.sidenav {
+.sidenav-wrapper {
     width: 200px;
     position: fixed;
     z-index: 1;
     top: 20px;
     left: 20px;
+}
+
+.sidenav {
+    width: 200px;
     background: #eee;
     overflow-x: hidden;
     padding: 8px 0;
-    transition: transform 0.2s ease;
 }
 
 .sidenav a {
@@ -158,7 +221,7 @@ body {
         display: block;
     }
 
-    .sidenav {
+    .sidenav-wrapper {
         top: 0;
         left: 0;
         height: 100%;
@@ -166,9 +229,10 @@ body {
         transform: translateX(-110%);
         z-index: 1200;
         box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease;
     }
 
-    .sidenav.is-open {
+    .sidenav-wrapper.is-open {
         transform: translateX(0);
     }
 }

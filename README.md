@@ -17,7 +17,6 @@ Here are some features and games planned for future development (see [TODO.md](T
   * **2048**: Grid sliding puzzle with merge animations and high scores.
   * **Minesweeper**, **Connect Four**, **Breakout / Brick Breaker**, and **Flappy Bird Clone**.
 * **Game Enhancements**:
-  * AI opponent (Minimax) for Tic-Tac-Toe.
   * Word validation dictionary & stats tracking for Wordle.
   * Difficulty levels, move counter, and speed-run timer for Memory Match.
 * **Site-Wide Features**:

@@ -14,6 +14,25 @@
 <div class="game-container">
     <h1 class="game-title">Tic-Tac-Toe</h1>
 
+    <div class="settings-menu">
+        <h2 class="settings-title">Game Settings</h2>
+        <div class="settings-row">
+            <label for="mode-select" class="settings-label">Mode</label>
+            <select id="mode-select" class="settings-select">
+                <option value="ai" selected>Single Player (vs AI)</option>
+                <option value="multiplayer">Multiplayer</option>
+            </select>
+        </div>
+        <div class="settings-row" id="difficulty-row">
+            <label for="difficulty-select" class="settings-label">Difficulty</label>
+            <select id="difficulty-select" class="settings-select">
+                <option value="easy" selected>Easy</option>
+                <option value="normal">Normal</option>
+                <option value="impossible">Impossible</option>
+            </select>
+        </div>
+    </div>
+
     <div id="status-display" class="status">Player X's turn</div>
 
     <div class="game-board">
@@ -32,12 +51,14 @@
 
 </div>
 
-<div class="sidenav" id="sidenav">
-    <a href="../index.html">Home</a>
-    <a href="tic-tac-toe.html" id="current-page">Tic-Tac-Toe</a>
-    <a href="wordle.html">Wordle</a>
-    <a href="memory-match.html">Memory Match</a>
-    <a href="snake.html">Snake</a>
+<div class="sidenav-wrapper" id="sidenav">
+    <div class="sidenav">
+        <a href="../index.html">Home</a>
+        <a href="tic-tac-toe.html" id="current-page">Tic-Tac-Toe</a>
+        <a href="wordle.html">Wordle</a>
+        <a href="memory-match.html">Memory Match</a>
+        <a href="snake.html">Snake</a>
+    </div>
 </div>
 </body>
 </html>

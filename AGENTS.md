@@ -4,9 +4,10 @@ Static HTML/CSS/JS website (no framework, no build step, no package.json). Hoste
 
 ## Layout conventions
 - Each game = 3 files in `pages/`: `<game>.html`, `<game>-styles.css`, `<game>-script.js`.
-- `pages/nav-toggle.js` is shared by every page (loaded with `defer`).
-- Every page must include the `nav-toggle` button (`id="nav-toggle"`, aria attributes) and a `div.sidenav` (`id="sidenav"`) listing all game links, plus Home. The current page's link gets `id="current-page"`.
-- `index.html` also has an inline copy of the sidenav CSS, so keep its styles in sync with the per-game stylesheets.
+- `pages/nav-toggle.js` is shared by every page (loaded with `defer`). It does two jobs: (1) the mobile sidenav drawer toggle, and (2) auto-injecting the "Clear All High Scores" button (`#clear-scores-btn`) plus its styles (`#clear-scores-style`) into the sidenav. New pages need NO button markup — it is created by `nav-toggle.js`.
+- Every page must include the `nav-toggle` button (`id="nav-toggle"`, aria attributes) and a `.sidenav-wrapper` (`id="sidenav"`) wrapping an inner grey `.sidenav` box. The grey box lists all game links, plus Home. The current page's link gets `id="current-page"`. This wrapper structure is identical across `index.html` and every game page.
+- `index.html` has an inline copy of the sidenav CSS (including `.sidenav-wrapper`), so keep its styles in sync with the per-game stylesheets.
+- Game settings menus use the shared `.settings-menu` / `.settings-select` pattern (see snake/memory-match/tic-tac-toe).
 
 ## Adding a new game (or any page)
 Update **all** of these or navigation breaks:

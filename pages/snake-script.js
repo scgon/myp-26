@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const speedSelect = document.getElementById("speed-select");
     const sizeSelect = document.getElementById("size-select");
+    const fruitsSelect = document.getElementById("fruits-select");
 
     const btnUp = document.getElementById("btn-up");
     const btnDown = document.getElementById("btn-down");
@@ -30,11 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let gridSize = SIZE_OPTIONS[sizeSelect.value];
     let tileSize = CANVAS_SIZE / gridSize;
+    let totalCells = gridSize * gridSize;
+    let fruitCount = parseInt(fruitsSelect.value);
     let gameInterval = null;
     let gameRunning = false;
 
     let snake = [];
-    let food = { x: 0, y: 0 };
+    let foods = [];
     let dx = 1;
     let dy = 0;
     let nextDx = 1;
@@ -48,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function applySize() {
         gridSize = SIZE_OPTIONS[sizeSelect.value];
         tileSize = CANVAS_SIZE / gridSize;
+        totalCells = gridSize * gridSize;
         canvas.width = CANVAS_SIZE;
         canvas.height = CANVAS_SIZE;
     }
@@ -77,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startButton.textContent = "Start Game";
 
         hideMessage();
-        spawnFood();
+        spawnFoods();
         draw();
     }
 
@@ -93,13 +97,51 @@ document.addEventListener("DOMContentLoaded", () => {
         gameInterval = setInterval(gameLoop, SPEED_OPTIONS[speedSelect.value]);
     }
 
-    function spawnFood() {
-        let validPosition = false;
-        while (!validPosition) {
-            food.x = Math.floor(Math.random() * gridSize);
-            food.y = Math.floor(Math.random() * gridSize);
-            validPosition = !snake.some(segment => segment.x === food.x && segment.y === food.y);
+    // Set of cell keys occupied by the snake and current fruits
+    function occupiedKeys() {
+        const occupied = new Set(snake.map(s => s.x + "," + s.y));
+        foods.forEach(food => occupied.add(food.x + "," + food.y));
+        return occupied;
+    }
+
+    // Random empty cell, with a linear fallback for near-full boards
+    function randomEmptyCell(occupied) {
+        for (let attempts = 0; attempts < 1000; attempts++) {
+            const x = Math.floor(Math.random() * gridSize);
+            const y = Math.floor(Math.random() * gridSize);
+            if (!occupied.has(x + "," + y)) {
+                occupied.add(x + "," + y);
+                return { x, y };
+            }
         }
+        for (let y = 0; y < gridSize; y++) {
+            for (let x = 0; x < gridSize; x++) {
+                if (!occupied.has(x + "," + y)) {
+                    occupied.add(x + "," + y);
+                    return { x, y };
+                }
+            }
+        }
+        return null;
+    }
+
+    // Spawns the initial set of fruits
+    function spawnFoods() {
+        foods = [];
+        const occupied = occupiedKeys();
+        for (let f = 0; f < fruitCount; f++) {
+            const pos = randomEmptyCell(occupied);
+            if (!pos) break;
+            foods.push(pos);
+        }
+    }
+
+    // Spawns one new fruit onto a random empty cell (for respawning an eaten fruit)
+    function respawnFood() {
+        const occupied = occupiedKeys();
+        const pos = randomEmptyCell(occupied);
+        if (pos) foods.push(pos);
+        return !!pos;
     }
 
     function gameLoop() {
@@ -125,8 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
         snake.unshift(head);
 
         // Food collision
-        if (head.x === food.x && head.y === food.y) {
-            score += 10;
+        const foodIndex = foods.findIndex(food => food.x === head.x && food.y === head.y);
+        if (foodIndex !== -1) {
+            score += 1;
             scoreElement.textContent = score;
 
             if (score > highScore) {
@@ -135,7 +178,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("snake_high_score", highScore.toString());
             }
 
-            spawnFood();
+            foods.splice(foodIndex, 1);
+
+            // Win condition: snake fills the entire board
+            if (snake.length >= totalCells) {
+                handleGameWin();
+                return;
+            }
+
+            // Move only the eaten fruit to a new spot, leaving the others untouched
+            respawnFood();
         } else {
             snake.pop();
         }
@@ -163,21 +215,23 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.stroke();
         }
 
-        // Draw food (apple)
-        const foodX = food.x * tileSize + tileSize / 2;
-        const foodY = food.y * tileSize + tileSize / 2;
-        const foodRadius = tileSize / 2 - 2;
+        // Draw foods (apples)
+        foods.forEach(food => {
+            const foodX = food.x * tileSize + tileSize / 2;
+            const foodY = food.y * tileSize + tileSize / 2;
+            const foodRadius = tileSize / 2 - 2;
 
-        ctx.fillStyle = "#e74c3c";
-        ctx.beginPath();
-        ctx.arc(foodX, foodY, foodRadius, 0, Math.PI * 2);
-        ctx.fill();
+            ctx.fillStyle = "#e74c3c";
+            ctx.beginPath();
+            ctx.arc(foodX, foodY, foodRadius, 0, Math.PI * 2);
+            ctx.fill();
 
-        // Leaf on apple
-        ctx.fillStyle = "#27ae60";
-        ctx.beginPath();
-        ctx.ellipse(foodX + 2, foodY - foodRadius, tileSize * 0.15, tileSize * 0.25, Math.PI / 4, 0, Math.PI * 2);
-        ctx.fill();
+            // Leaf on apple
+            ctx.fillStyle = "#27ae60";
+            ctx.beginPath();
+            ctx.ellipse(foodX + 2, foodY - foodRadius, tileSize * 0.15, tileSize * 0.25, Math.PI / 4, 0, Math.PI * 2);
+            ctx.fill();
+        });
 
         // Draw snake
         const headInset = tileSize >= 18 ? 1 : 0;
@@ -244,6 +298,16 @@ document.addEventListener("DOMContentLoaded", () => {
         gameInterval = null;
         startButton.textContent = "Restart Game";
         showMessage(`Game Over! Final Score: ${score}`, "lose");
+    }
+
+    function handleGameWin() {
+        gameOver = true;
+        gameRunning = false;
+        clearInterval(gameInterval);
+        gameInterval = null;
+        startButton.textContent = "Restart Game";
+        showMessage(`You Win! Final Score: ${score}`, "win");
+        draw();
     }
 
     function changeDirection(newDx, newDy) {
@@ -351,6 +415,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     sizeSelect.addEventListener("change", () => {
         applySize();
+        initBoard();
+    });
+
+    fruitsSelect.addEventListener("change", () => {
+        fruitCount = parseInt(fruitsSelect.value);
         initBoard();
     });
 

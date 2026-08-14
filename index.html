@@ -13,7 +13,7 @@
             padding: 0 20px;
         }
 
-        li {
+li {
             margin: 5px 0;
         }
 
@@ -37,16 +37,19 @@
             cursor: pointer;
         }
 
-        .sidenav {
+        .sidenav-wrapper {
             width: 200px;
             position: fixed;
             z-index: 1;
             top: 20px;
             left: 20px;
+        }
+
+        .sidenav {
+            width: 200px;
             background: #eee;
             overflow-x: hidden;
             padding: 8px 0;
-            transition: transform 0.2s ease;
         }
 
         .sidenav a {
@@ -71,7 +74,7 @@
                 display: block;
             }
 
-            .sidenav {
+            .sidenav-wrapper {
                 top: 0;
                 left: 0;
                 height: 100%;
@@ -79,9 +82,10 @@
                 transform: translateX(-110%);
                 z-index: 1200;
                 box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+                transition: transform 0.2s ease;
             }
 
-            .sidenav.is-open {
+            .sidenav-wrapper.is-open {
                 transform: translateX(0);
             }
         }
@@ -91,12 +95,14 @@
 <button class="nav-toggle" id="nav-toggle" aria-controls="sidenav" aria-expanded="false">☰</button>
 <h1>About the Project:</h1>
 
-<div class="sidenav" id="sidenav">
-    <a href="index.html" id="current-page">Home</a>
-    <a href="pages/tic-tac-toe.html">Tic-Tac-Toe</a>
-    <a href="pages/wordle.html">Wordle</a>
-    <a href="pages/memory-match.html">Memory Match</a>
-    <a href="pages/snake.html">Snake</a>
+<div class="sidenav-wrapper" id="sidenav">
+    <div class="sidenav">
+        <a href="index.html" id="current-page">Home</a>
+        <a href="pages/tic-tac-toe.html">Tic-Tac-Toe</a>
+        <a href="pages/wordle.html">Wordle</a>
+        <a href="pages/memory-match.html">Memory Match</a>
+        <a href="pages/snake.html">Snake</a>
+    </div>
 </div>
 
 <p>This is my 10th grade IB MYP (International Baccalaureate Middle Years Program) project, done in the 2025-2026 school year.</p>
@@ -114,7 +120,7 @@
 <p>As I continue learning JavaScript and web graphics, I plan to add more games and site-wide features (see <a href="https://github.com/scgon/myp-26/blob/main/TODO.md">TODO.md</a> for the full list):</p>
 <ul>
     <li><strong>Upcoming Games:</strong> Pong (2D physics &amp; AI opponent), 2048, Minesweeper, Connect Four, Breakout, and Flappy Bird.</li>
-    <li><strong>Enhancements for Existing Games:</strong> AI mode for Tic-Tac-Toe, statistics tracking and dictionary validation for Wordle, and customizable difficulty/timers for Memory Match.</li>
+    <li><strong>Enhancements for Existing Games:</strong> statistics tracking and dictionary validation for Wordle, and customizable difficulty/timers for Memory Match.</li>
     <li><strong>Site-Wide Features:</strong> Saving player statistics and high scores via <code>localStorage</code>, sound effects, dark mode support, and touch controls for mobile.</li>
 </ul>
 

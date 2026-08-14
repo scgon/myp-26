@@ -260,16 +260,19 @@ h1 {
     color: #246daf;
 }
 
-.sidenav {
+.sidenav-wrapper {
     width: 200px;
     position: fixed;
     z-index: 1;
     top: 20px;
     left: 20px;
+}
+
+.sidenav {
+    width: 200px;
     background: #eee;
     overflow-x: hidden;
     padding: 8px 0;
-    transition: transform 0.2s ease;
 }
 
 .sidenav a {
@@ -289,7 +292,7 @@ h1 {
         display: block;
     }
 
-    .sidenav {
+    .sidenav-wrapper {
         top: 0;
         left: 0;
         height: 100%;
@@ -297,9 +300,10 @@ h1 {
         transform: translateX(-110%);
         z-index: 1200;
         box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease;
     }
 
-    .sidenav.is-open {
+    .sidenav-wrapper.is-open {
         transform: translateX(0);
     }
 }

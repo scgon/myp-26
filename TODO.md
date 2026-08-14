@@ -22,7 +22,7 @@
   * [x] Add move counter and speed-run timer.
   * [x] Add best moves and best time tracking (saved in `localStorage`).
 * [ ] **Tic-Tac-Toe**:
-  * [ ] Add an AI opponent mode (easy random AI and unbeatable Minimax AI).
+  * [x] Add an AI opponent mode (easy random AI and unbeatable Minimax AI).
   * [ ] Add score tracker across multiple rounds.
 
 ## Site-Wide Features & UI/UX
