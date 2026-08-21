@@ -3,8 +3,15 @@
 // of the wrong theme while deferred scripts run.
 const THEME_STORAGE_KEY = "theme";
 
+function getSystemTheme() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+// An explicit choice made via the toggle wins; otherwise follow the OS setting.
 function getSavedTheme() {
-    return localStorage.getItem(THEME_STORAGE_KEY) === "dark" ? "dark" : "light";
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    if (stored === "dark" || stored === "light") return stored;
+    return getSystemTheme();
 }
 
 function applyTheme(theme) {
@@ -157,6 +164,19 @@ document.addEventListener("DOMContentLoaded", () => {
     injectSidenavButtonStyles();
     setupClearScoresButton();
     setupThemeToggleButton();
+
+    // Follow live OS theme changes while the user has not made an explicit choice
+    const systemDarkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    systemDarkQuery.addEventListener("change", () => {
+        if (localStorage.getItem(THEME_STORAGE_KEY)) return;
+        const newTheme = systemDarkQuery.matches ? "dark" : "light";
+        applyTheme(newTheme);
+        const themeButton = document.getElementById(themeToggleBtnId);
+        if (themeButton) {
+            refreshThemeToggleButton(themeButton);
+        }
+        document.dispatchEvent(new CustomEvent("themechange", { detail: { theme: newTheme } }));
+    });
 
     const setMenuState = (isOpen) => {
         sideNav.classList.toggle("is-open", isOpen);
