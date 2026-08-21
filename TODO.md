@@ -26,9 +26,9 @@
   * [ ] Add score tracker across multiple rounds.
 
 ## Site-Wide Features & UI/UX
-* [ ] **Persistent High Scores & Stats**: Use browser `localStorage` to save player records and stats across sessions.
+* [x] **Persistent High Scores & Stats**: Use browser `localStorage` to save player records and stats across sessions.
 * [ ] **Sound Effects & Music**: Add Web Audio / sound effects for actions, wins, and losses with a global mute toggle.
-* [ ] **Dark Mode / Theme Toggle**: Allow players to switch between light and dark color schemes.
+* [x] **Dark Mode / Theme Toggle**: Allow players to switch between light and dark color schemes.
 * [ ] **How to Play Modals**: Add an info button on each game page with game rules and instructions.
-* [ ] **Win Animations**: Add confetti or celebration effects when winning a game.
+* [x] **Win Animations**: Add confetti or celebration effects when winning a game.
 * [ ] **Mobile & Touch Support**: Ensure touch swipe and on-screen controls work smoothly on mobile screens.

@@ -299,12 +299,54 @@ h1 {
         padding-top: 72px;
         transform: translateX(-110%);
         z-index: 1200;
-        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
         transition: transform 0.2s ease;
+    }
+
+    .sidenav {
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
     }
 
     .sidenav-wrapper.is-open {
         transform: translateX(0);
     }
+}
+
+/* Dark mode */
+html.dark-mode body {
+    background-color: #121213;
+    color: #ffffff;
+}
+
+html.dark-mode .tile {
+    background-color: #121213;
+    border-color: #3a3a3c;
+}
+
+html.dark-mode .tile.filled {
+    border-color: #565758;
+}
+
+html.dark-mode .key {
+    background-color: #818384;
+}
+
+html.dark-mode .key:hover {
+    background-color: #8d8d90;
+}
+
+html.dark-mode .key:active {
+    background-color: #6e6e70;
+}
+
+html.dark-mode .sidenav {
+    background: #222;
+}
+
+html.dark-mode .sidenav a:hover {
+    color: #7ab8ff;
+}
+
+html.dark-mode #current-page {
+    color: #5aa9e6;
 }
 

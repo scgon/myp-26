@@ -92,19 +92,22 @@ function handleResultValidation() {
     if (roundWon) {
         statusDisplay.innerHTML = winningMessage();
         if (currentPlayer === "X") {
-            statusDisplay.style.color = "#e74c3c";
+            statusDisplay.style.color = "var(--ttt-x)";
         } else {
-            statusDisplay.style.color = "#3498db";
+            statusDisplay.style.color = "var(--ttt-o)";
         }
 
         gameActive = false;
+        if (gameMode === "multiplayer" || currentPlayer === humanPlayer) {
+            launchConfetti();
+        }
         return;
     }
 
     let roundDraw = !gameState.includes("");
     if (roundDraw) {
         statusDisplay.innerHTML = drawMessage();
-        statusDisplay.style.color = "#6A0DAD";
+        statusDisplay.style.color = "var(--ttt-draw)";
         gameActive = false;
         return;
     }
@@ -115,7 +118,7 @@ function handleResultValidation() {
 function handlePlayerChange() {
     currentPlayer = currentPlayer === "X" ? "O" : "X";
     statusDisplay.innerHTML = currentPlayerTurn();
-    statusDisplay.style.color = "#555";
+    statusDisplay.style.color = "var(--ttt-neutral)";
 }
 
 function handleRestartGame() {
@@ -123,7 +126,7 @@ function handleRestartGame() {
     currentPlayer = "X";
     gameState = ["", "", "", "", "", "", "", "", ""];
     statusDisplay.innerHTML = currentPlayerTurn();
-    statusDisplay.style.color = "#555"
+    statusDisplay.style.color = "var(--ttt-neutral)"
 
     cells.forEach(cell => {
         cell.classList.remove('x');

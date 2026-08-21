@@ -195,13 +195,23 @@ document.addEventListener("DOMContentLoaded", () => {
         draw();
     }
 
+    function getBoardColors() {
+        const darkMode = document.documentElement.classList.contains("dark-mode");
+        return {
+            background: darkMode ? "#1e1f22" : "#f8f9fa",
+            grid: darkMode ? "#33363a" : "#e9ecef"
+        };
+    }
+
     function draw() {
+        const colors = getBoardColors();
+
         // Clear canvas
-        ctx.fillStyle = "#f8f9fa";
+        ctx.fillStyle = colors.background;
         ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
         // Draw grid lines
-        ctx.strokeStyle = "#e9ecef";
+        ctx.strokeStyle = colors.grid;
         ctx.lineWidth = 1;
         for (let i = 0; i <= gridSize; i++) {
             ctx.beginPath();
@@ -307,6 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
         gameInterval = null;
         startButton.textContent = "Restart Game";
         showMessage(`You Win! Final Score: ${score}`, "win");
+        launchConfetti();
         draw();
     }
 
@@ -410,6 +421,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (gameRunning) {
             clearInterval(gameInterval);
             gameInterval = setInterval(gameLoop, SPEED_OPTIONS[speedSelect.value]);
+        }
+    });
+
+    // Repaint the board when the site theme is toggled
+    document.addEventListener("themechange", () => {
+        if (!gameRunning) {
+            draw();
         }
     });
 

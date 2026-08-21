@@ -152,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateBestStats();
             messageDisplay.textContent = 'You Win!';
             messageDisplay.classList.add('win', 'show');
+            launchConfetti();
         }
     }
 

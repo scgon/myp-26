@@ -228,12 +228,86 @@ body {
         padding-top: 72px;
         transform: translateX(-110%);
         z-index: 1200;
-        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
         transition: transform 0.2s ease;
+    }
+
+    .sidenav {
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
     }
 
     .sidenav-wrapper.is-open {
         transform: translateX(0);
     }
+}
+
+/* Status colors (used by the script via CSS variables so dark mode works) */
+:root {
+    --ttt-x: #e74c3c;
+    --ttt-o: #3498db;
+    --ttt-draw: #6a0dad;
+    --ttt-neutral: #555555;
+}
+
+/* Dark mode */
+html.dark-mode {
+    --ttt-x: #ff7b72;
+    --ttt-o: #5dade2;
+    --ttt-draw: #af7ac5;
+    --ttt-neutral: #aaaaaa;
+}
+
+html.dark-mode body {
+    background-color: #121213;
+    color: #ffffff;
+}
+
+html.dark-mode .game-title {
+    color: #eeeeee;
+}
+
+html.dark-mode .status {
+    color: #aaaaaa;
+}
+
+html.dark-mode .settings-menu {
+    background-color: #1e1f22;
+    border-color: #333;
+}
+
+html.dark-mode .settings-title {
+    color: #dddddd;
+}
+
+html.dark-mode .settings-label {
+    color: #aaaaaa;
+}
+
+html.dark-mode .settings-select {
+    background-color: #121213;
+    color: #eeeeee;
+    border-color: #555;
+}
+
+html.dark-mode .cell {
+    background-color: #1e1f22;
+    border-color: #444;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+html.dark-mode .cell:hover {
+    background-color: #26272b;
+    border-color: #666;
+}
+
+html.dark-mode .sidenav {
+    background: #222;
+}
+
+html.dark-mode .sidenav a:hover {
+    color: #7ab8ff;
+}
+
+html.dark-mode #current-page {
+    color: #5aa9e6;
 }
 

@@ -182,6 +182,7 @@ function handleSubmit() {
         gameOver = true;
         scheduleGameTimeout(() => {
             showMessage('You Win!', 3000, 'win');
+            launchConfetti();
         }, 1500, sessionId);
     } else if (currentRow === 5) {
         gameOver = true;

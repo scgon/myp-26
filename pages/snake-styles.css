@@ -284,11 +284,67 @@ h1 {
         padding-top: 72px;
         transform: translateX(-110%);
         z-index: 1200;
-        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
         transition: transform 0.2s ease;
+    }
+
+    .sidenav {
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
     }
 
     .sidenav-wrapper.is-open {
         transform: translateX(0);
     }
+}
+
+/* Dark mode */
+html.dark-mode body {
+    background-color: #121213;
+    color: #ffffff;
+}
+
+html.dark-mode .stats,
+html.dark-mode .settings-label {
+    color: #aaaaaa;
+}
+
+html.dark-mode .settings-menu {
+    background-color: #1e1f22;
+    border-color: #333;
+}
+
+html.dark-mode .settings-title {
+    color: #dddddd;
+}
+
+html.dark-mode .settings-select {
+    background-color: #121213;
+    color: #eeeeee;
+    border-color: #555;
+}
+
+html.dark-mode #snake-canvas {
+    background-color: #1e1f22;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+
+html.dark-mode .dpad-btn {
+    background-color: #333;
+    color: #eeeeee;
+    border-color: #555;
+}
+
+html.dark-mode .dpad-btn:active {
+    background-color: #444;
+}
+
+html.dark-mode .sidenav {
+    background: #222;
+}
+
+html.dark-mode .sidenav a:hover {
+    color: #7ab8ff;
+}
+
+html.dark-mode #current-page {
+    color: #5aa9e6;
 }
